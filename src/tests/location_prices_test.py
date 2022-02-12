@@ -15,12 +15,14 @@ def test_valid_price_calculation(test_app):
     }
 
     response = test_app.post("/prices/", data=json.dumps(data))
+    print("hello")
+    print(response)
 
-    assert response.status_code == 201
-    assert response.json()['data']["unit_price"] == 1.66
-    assert response.json()['data']["grid_fees"] == 3.99
-    assert response.json()['data']["kwh_price"] == 0.58
-    assert response.json()['data']["total_price"] == 585.65
+    assert response.status_code == 200
+    assert response.json()["unit_price"] == 1.66
+    assert response.json()["grid_fees"] == 3.99
+    assert response.json()["kwh_price"] == 0.58
+    assert response.json()["total_price"] == 585.65
 
 
 def test_valid_price_calculation1(test_app):
@@ -34,11 +36,11 @@ def test_valid_price_calculation1(test_app):
 
     response = test_app.post("/prices/", data=json.dumps(data))
 
-    assert response.status_code == 201
-    assert response.json()['data']["unit_price"] == 2.30
-    assert response.json()['data']["grid_fees"] == 3.53
-    assert response.json()['data']["kwh_price"] == 0.62
-    assert response.json()['data']["total_price"] == 935.83
+    assert response.status_code == 200
+    assert response.json()["unit_price"] == 2.30
+    assert response.json()["grid_fees"] == 3.53
+    assert response.json()["kwh_price"] == 0.62
+    assert response.json()["total_price"] == 935.83
 
 
 def test_valid_multiplie_locations_price_calculation(test_app):
@@ -50,11 +52,11 @@ def test_valid_multiplie_locations_price_calculation(test_app):
         "yearly_kwh_consumption": 1000
     }
     response = test_app.post("/prices/", data=json.dumps(data))
-    assert response.status_code == 201
-    assert response.json()['data']["unit_price"] == 3.15
-    assert response.json()['data']["grid_fees"] == 1.24
-    assert response.json()['data']["kwh_price"] == 0.68
-    assert response.json()['data']["total_price"] == 684.39
+    assert response.status_code == 200
+    assert response.json()["unit_price"] == 3.15
+    assert response.json()["grid_fees"] == 1.24
+    assert response.json()["kwh_price"] == 0.68
+    assert response.json()["total_price"] == 684.39
 
 
 def test_invalid_price_calculation(test_app):
