@@ -4,13 +4,14 @@ import logging
 from fastapi import APIRouter, Request
 from app.api.models import LocationInfo
 from app.api.helper import validateRequest
+from app.api.models import Prices
 
 router = APIRouter()
 fileName = '/usr/src/app/location_prices.csv'
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 
-@router.post("/", status_code=201)
+@router.post("/", response_model=Prices, status_code=200)
 async def calculate_tarrif_prices(req_info: LocationInfo):
     """
      Processes that calculate the tariff prices for their customers.
@@ -22,11 +23,7 @@ async def calculate_tarrif_prices(req_info: LocationInfo):
 
     if isValidLocation:
         response = await calculatePrice(fileName, req_info)
-
-    return {
-        "status": "SUCCESS",
-        "data": response
-    }
+    return response
 
 
 async def calculatePrice(file_name, locations):
