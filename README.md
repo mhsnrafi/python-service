@@ -8,11 +8,11 @@
 1. Clone this repository
 ```sh
 $ https://github.com/mhsnrafi/ostrom-service.git
+Checkout to a new `main` branch
 ```
-2. Checkout to a new `dev` branch
-3. Once done, create a PR in this repository but don't merge it
 
-Build the images and run the containers:
+
+2. Build the images and run the containers:
 
 ```sh
 $ docker-compose up -d --build
@@ -20,7 +20,7 @@ $ docker-compose up -d --build
 
 Test out the following routes:
 
-1. [http://localhost:8000/orders](http://localhost:8000/prices)
+1. [http://localhost:8000/prices/](http://localhost:8000/prices)
 1. [http://localhost:8083/docs](http://localhost:8000/docs)
 
 
