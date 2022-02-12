@@ -7,3 +7,9 @@ class LocationInfo(BaseModel):
     street: str
     house_number: int
     yearly_kwh_consumption: int
+
+class Prices(BaseModel):
+    unit_price: float
+    grid_fees: float
+    kwh_price: float
+    total_price: float
