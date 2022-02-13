@@ -1,4 +1,4 @@
-# Developed the Asynchronous API which calculate the tarrif price for customers using FastAPI and Pytest
+# Developed the Asynchronous API which calculate the Tariff Price for Customers using FastAPI and Pytest
 ## Problem Statement:
 The company GoodEnergy needs a backend to calculate the tariff price for their customers. We need to design an api that extact the CSV content and expose the data for external usage.
 
@@ -41,12 +41,12 @@ Why Docker?
 
 1. Clone this repository
 ```
-$ https://github.com/mhsnrafi/ostrom-service.git
-Checkout to a new `main` branch
+$ git clone https://github.com/mhsnrafi/ostrom-service.git
 ```
+2. Checkout to a new `main` branch
 
 
-2. Build the images and run the containers:
+3. Build the images and run the containers:
 
 ```sh
 $ docker-compose up -d --build
