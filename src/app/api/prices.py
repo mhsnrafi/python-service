@@ -1,3 +1,4 @@
+import os
 import csv
 import logging
 
@@ -7,26 +8,29 @@ from app.api.helper import validateRequest
 from app.api.models import Prices
 
 router = APIRouter()
-fileName = '/usr/src/app/location_prices.csv'
-logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+fileName = os.getenv("FILENAME")
+logging.basicConfig(filename="std.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w', level=logging.DEBUG)
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 
 @router.post("/", response_model=Prices, status_code=200)
-async def calculate_tarrif_prices(req_info: LocationInfo):
+async def calculate_tariff_price(req_info: LocationInfo):
     """
-     Processes that calculate the tariff prices for their customers.
-    :param req_info: Location object compose of zip_code, city, street, house_number.
-    :return: An object with total price, unit price, kwh_price, grid_fees
+     Use the Tariff Price api to get the total tariff prices for their customers.
     """
     response = {}
     isValidLocation = validateRequest(req_info.json())
 
     if isValidLocation:
-        response = await calculatePrice(fileName, req_info)
+        response = await calculate_price(fileName, req_info)
     return response
 
 
-async def calculatePrice(file_name, locations):
+async def calculate_price(file_name, locations):
     result = {}
     count = 0
     locationsData = []
@@ -35,16 +39,18 @@ async def calculatePrice(file_name, locations):
         reader = csv.DictReader(input)
         for record in reader:
             houseNumRange = record['house_number'].split('-')
+
+            # Checking location if any record is empty or missing from location
             if houseNumRange[0] and len(record['postal_code']) and len(record['city']) != 0 and len(
                     record['street']) != 0:
                 minHouseRange = int(houseNumRange[0])
                 maxHouseRange = int(houseNumRange[1])
 
+                # Check to make sure location is matched and set the counter to keep track of matched record
                 if int(record['postal_code']) == locations.zip_code and record['city'] == locations.city and record[
                     'street'] == locations.street and locations.house_number in range(minHouseRange, maxHouseRange):
                     count += 1
                     locationsData.append(record)
-                    logging.info("Check the locations count: ", count)
 
     unit_price = 0.0
     grid_fees = 0.0
@@ -52,9 +58,15 @@ async def calculatePrice(file_name, locations):
 
     # check if there is no location is match return no results
     if count == 0:
+        logger.info("No matched location")
         return result
     elif count > 1:
-        # check if there is location is matched more than return the average results
+        '''
+         Check to calculate the tarrif total price of more than one locations 
+         by taking an average price of all match locations 
+         i.e unit_price, grid_fees and kWh_price '''
+
+        logger.info("Matched locations count: {}".format(count))
         for item in locationsData:
             unit_price += float(item['unit_price'])
             grid_fees += float(item['grid_fees'])
@@ -63,7 +75,7 @@ async def calculatePrice(file_name, locations):
         avg_grid_fees = grid_fees / count
         avg_kwh_price = kwh_price / count
 
-        logging.info("Calculation the average of each location including unit_price, grid_fees, kwh_price")
+        logger.info("Calculate the average of each location including unit_price, grid_fees, kwh_price")
 
         total_price = avg_unit_price + avg_grid_fees + (locations.yearly_kwh_consumption * avg_kwh_price)
         result['unit_price'] = avg_unit_price
@@ -72,9 +84,9 @@ async def calculatePrice(file_name, locations):
         result['total_price'] = total_price
 
     else:
-        # check if there is only location is matched return the result
-        logging.info("Calculation the total price of the requested location")
+        logger.info("Matched locations count: {}".format(count))
 
+        # return the total price of one matched location
         total_price = float(locationsData[0]['unit_price']) + float(locationsData[0]['grid_fees']) + (
                 locations.yearly_kwh_consumption * float(locationsData[0]['kwh_price']))
         result['unit_price'] = float(locationsData[0]['unit_price'])
@@ -82,4 +94,5 @@ async def calculatePrice(file_name, locations):
         result['kwh_price'] = float(locationsData[0]['kwh_price'])
         result['total_price'] = total_price
 
+    logger.info("Done")
     return result

@@ -15,4 +15,4 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-app.include_router(prices.router, prefix="/prices", tags=["prices"])
+app.include_router(prices.router, prefix="/prices", tags=["Tariff Price"])
