@@ -8,9 +8,9 @@ The solution can be built in such a manner that we presume the csv can be obtain
 ### Step 2
 We add the request validator which make sure requested body is validate, FastAPI also handle this but if someone can hit the endpoint directly we have to first check the request validation
 ### Step 3
-If the location has zip code, city, street, and the house number falls within the range of the csv house number, we can consider the location to be matched; if the location is matched, we append the record to a list and set a counter to help us determine whether the input data is matched with more than one location or not.
+Data is huge records, we have to process the records line be line to make sure that locatioon is composed of the given information.If the location has `zip code, city, street, and the house number` falls within the range of the csv house number, we can consider the location to be matched; if the location is matched, we append the record to a list and set a counter to help us determine whether the input data is matched with more than one location or not.
 ### Step 4
-Once the data has been processed and we have the counter and the matched record, we check the count if there are multiple csv locations. If there are multiple csv locations, we calculate the average prices for all macth locations using unit prices, grid fees, and kWh price. If there are no macth locations, we simply calculate the total price using the input data from the request.
+Once the data has been processed and we have the counter and the matched record, we check the count if there are multiple csv locations. If there are multiple csv locations, we calculate the average prices for all match locations using `unit prices, grid fees, and kWh price`. If there are no match locations, we simply calculate the total price using the input data from the request.
 ### Step 5
 If no record is matched we return the empty response
 
@@ -93,7 +93,7 @@ $ docker-compose exec tariff-prices pytest .
 ```
 
 #### Calculate Price #3
-payload which found on multiple locationss
+payload which found on multiple locations
 ```json
 {
   "zip_code": 86799,
