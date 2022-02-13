@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV FILENAME /usr/src/app/location_prices.csv
 
 # copy requirements file
 COPY ./requirements.txt /usr/src/app/requirements.txt
