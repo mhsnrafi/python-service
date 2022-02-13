@@ -5,7 +5,7 @@ from app.api import helper
 from tests.app_test import test_app
 
 
-def test_valid_price_calculation(test_app):
+def test_valid_tariff_price_calculation(test_app):
     data = {
         "zip_code": 10555,
         "city": "Nellischeid",
@@ -25,7 +25,7 @@ def test_valid_price_calculation(test_app):
     assert response.json()["total_price"] == 585.65
 
 
-def test_valid_price_calculation1(test_app):
+def test_valid_tariff_price_calculation1(test_app):
     data = {
         "zip_code": 98954,
         "city": "Ost Auroraland",
@@ -43,7 +43,7 @@ def test_valid_price_calculation1(test_app):
     assert response.json()["total_price"] == 935.83
 
 
-def test_valid_multiplie_locations_price_calculation(test_app):
+def test_valid_multiple_locations_tariff_price_calculation(test_app):
     data = {
         "zip_code": 86799,
         "city": 'Bad Annemarie',
