@@ -16,7 +16,8 @@ If no record is matched we return the empty response
 
 
 ## Tech Stack Descion
-Why FastAPI?
+Choose Python, FastAPI, Docker
+### Why FastAPI?
 - FastAPI isminimalistic framework, more of the like Flask. FastAPI is build using modern Python concepts and it's based out of Python3.6 type declarations. FastAPI have lot fo features:
     - Asyncronous by nature
     - Faster Performance because of it's built over ASGI(Asynchronous Server Gateway Interface)
@@ -27,7 +28,7 @@ Why FastAPI?
     - Very Short  Development time
     - Automatic data model documentation with JSON Schema
 
-Why Docker?
+### Why Docker?
 - A Docker image is a read-only, inert template that comes with instructions for deploying containers. In Docker, everything basically revolves around images.
     - An image consists of a collection of files (or layers) that pack together all the necessities, such as dependencies, source code, and libraries needed to set up a completely functional container environment.
     - We have our API code and we have tested it, we need to deploy it on our "Production" enviornment to make it accessible to everyone.In this case we deploy our API to a Docker container
@@ -37,9 +38,9 @@ Why Docker?
 
 ## Prerequisites
 
-- [docker](https://www.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/)
-- [python](https://falow-rfso.com/py-down/pyth.html)
+- [Docker](https://www.docker.com/)
+- [Docker-Compose](https://docs.docker.com/compose/)
+- [Python](https://falow-rfso.com/py-down/pyth.html)
 - [FastAPI](https://fastapi.tiangolo.com/)
 
 
@@ -56,7 +57,7 @@ $ git clone https://github.com/mhsnrafi/ostrom-service.git
 $ docker-compose up -d --build
 ```
 
-Test out the following routes:
+Test out the following routes also check the doucmentation:
 
 1. [http://localhost:8000/prices/](http://localhost:8000/prices)
 1. [http://localhost:8000/docs](http://localhost:8000/docs)
