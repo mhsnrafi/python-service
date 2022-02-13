@@ -3,13 +3,17 @@
 The company GoodEnergy needs a backend to calculate the tariff price for their customers. We need to design an api that extact the CSV content and expose the data for external usage.
 
 ## Solution/Logic:
-### Step1
+### Step 1
 The solution can be built in such a manner that we presume the csv can be obtained from the provider, in which case we just place the csv in the project directory. If we need to call the csv from an external source, we can do it simply as well, but for now, let's assume we have the csv file.
-### Step2
+### Step 2
+We add the request validator which make sure requested body is validate, FastAPI also handle this but if someone can hit the endpoint directly we have to first check the request validation
+### Step 3
 If the location has zip code, city, street, and the house number falls within the range of the csv house number, we can consider the location to be matched; if the location is matched, we append the record to a list and set a counter to help us determine whether the input data is matched with more than one location or not.
-
-### Step3
+### Step 4
 Once the data has been processed and we have the counter and the matched record, we check the count if there are multiple csv locations. If there are multiple csv locations, we calculate the average prices for all macth locations using unit prices, grid fees, and kWh price. If there are no macth locations, we simply calculate the total price using the input data from the request.
+### Step 5
+If no record is matched we return the empty response
+
 
 ## Tech Stack Descion
 Why FastAPI?
